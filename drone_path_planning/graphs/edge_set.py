@@ -1,27 +1,22 @@
-from __future__ import annotations
-from typing import Callable
-from typing import TypeVar
+from typing import Any
+from typing import NamedTuple
 
 import tensorflow as tf
 
-from drone_path_planning.graphs.common import Feature
-from drone_path_planning.graphs.common import OutputFeature
 from drone_path_planning.graphs.component_set import ComponentSet
 
 
-T = TypeVar('T', Feature, OutputFeature)
-U = TypeVar('U', Feature, OutputFeature)
+class _EdgeSetTuple(NamedTuple):
+    features: Any
+    senders: tf.Tensor
+    receivers: tf.Tensor
+    sender_set: str
+    receiver_set: str
 
 
-class EdgeSet(ComponentSet[T]):
-    def __init__(self, features: T, senders: tf.Tensor, receivers: tf.Tensor, sender_set: str, receiver_set: str) -> None:
-        super().__init__(features)
-        self.senders = senders
-        self.receivers = receivers
-        self.sender_set = sender_set
-        self.receiver_set = receiver_set
+class EdgeSet(ComponentSet, _EdgeSetTuple):
+    def replace(self, **kwargs):
+        return self._replace(**kwargs)
 
-    def map(self, features_map_function: Callable[[T], U] = lambda x: x) -> EdgeSet[U]:
-        mapped_features = features_map_function(self.features)
-        mapped_component_set = EdgeSet(mapped_features, self.senders, self.receivers, self.sender_set, self.receiver_set)
-        return mapped_component_set
+    def _features(self):
+        return self.features
