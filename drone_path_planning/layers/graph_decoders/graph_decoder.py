@@ -32,7 +32,7 @@ class GraphDecoder(tf.keras.layers.Layer):
         kernel_regularizer=None,
         bias_regularizer=None,
         activity_regularizer=None,
-        must_layer_normalize=False,
+        should_layer_normalize=False,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
@@ -43,7 +43,7 @@ class GraphDecoder(tf.keras.layers.Layer):
         self._kernel_regularizer = kernel_regularizer
         self._bias_regularizer = bias_regularizer
         self._activity_regularizer = activity_regularizer
-        self._must_layer_normalize = must_layer_normalize
+        self._should_layer_normalize = should_layer_normalize
         self._node_output_spec_map = output_specs.node_sets
         self._edge_output_spec_map = output_specs.edge_sets
         self._node_decoders = self._create_set_decoders(output_specs.node_sets)
