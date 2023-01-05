@@ -201,7 +201,7 @@ class SingleChaserSingleMovingTargetEnvironment(Environment):
         reward = 0.0
         return reward
 
-    def _get_reward(self, observation: tf.Tensor) -> tf.Tensor:
+    def _get_reward(self, action: tf.Tensor, observation: tf.Tensor) -> tf.Tensor:
         reward = 0.0
         time_reward = self._get_time_reward()
         reward += time_reward
