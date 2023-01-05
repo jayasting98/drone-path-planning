@@ -27,7 +27,7 @@ class MultiLayerPerceptronGraphProcessor(GraphProcessor):
         self._activity_regularizer = activity_regularizer
         self._should_layer_normalize = should_layer_normalize
 
-    def _create_graph_net_block(self):
+    def _create_graph_network_block(self):
         return MultiLayerPerceptronGraphNetworkBlock(
             self._latent_size,
             self._num_hidden_layers,
