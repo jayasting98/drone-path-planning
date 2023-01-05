@@ -67,7 +67,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
         predictions = raw_predictions.node_sets[SELF].features
         return predictions
 
-    def _build_self_node_set(self_angular_velocity: tf.Tensor) -> NodeSet:
+    def _build_self_node_set(self, self_angular_velocity: tf.Tensor) -> NodeSet:
         self_node_features = tf.concat([
             self_angular_velocity,
             tf.norm(self_angular_velocity, axis=-1, keepdims=True),
@@ -75,7 +75,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
         self_node_set = NodeSet(self_node_features)
         return self_node_set
 
-    def _build_target_node_set(target_relative_velocity: tf.Tensor, target_angular_velocity: tf.Tensor) -> NodeSet:
+    def _build_target_node_set(self, target_relative_velocity: tf.Tensor, target_angular_velocity: tf.Tensor) -> NodeSet:
         target_node_features = tf.concat([
             target_relative_velocity,
             tf.norm(target_relative_velocity, axis=-1, keepdims=True),
@@ -85,7 +85,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
         target_node_set = NodeSet(target_node_features)
         return target_node_set
 
-    def _build_self_target_edge_set(target_relative_displacement: tf.Tensor, selves: tf.Tensor, targets: tf.Tensor) -> EdgeSet:
+    def _build_self_target_edge_set(self, target_relative_displacement: tf.Tensor, selves: tf.Tensor, targets: tf.Tensor) -> EdgeSet:
         self_target_edge_features = tf.concat([
             target_relative_displacement,
             tf.norm(target_relative_displacement, axis=-1, keepdims=True),
@@ -99,7 +99,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
         )
         return self_target_edge_set
 
-    def _build_target_self_edge_set(target_relative_displacement: tf.Tensor, targets: tf.Tensor, selves: tf.Tensor) -> EdgeSet:
+    def _build_target_self_edge_set(self, target_relative_displacement: tf.Tensor, targets: tf.Tensor, selves: tf.Tensor) -> EdgeSet:
         target_self_edge_features = tf.concat([
             -target_relative_displacement,
             tf.norm(-target_relative_displacement, axis=-1, keepdims=True),
