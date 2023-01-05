@@ -6,15 +6,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
-from drone_path_planning.constants import ANTI_CLOCKWISE
-from drone_path_planning.constants import BACKWARD
-from drone_path_planning.constants import CLOCKWISE
-from drone_path_planning.constants import FORWARD
-from drone_path_planning.constants import REST
-from drone_path_planning.constants import SELF_ANGULAR_VELOCITY
-from drone_path_planning.constants import TARGET_ANGULAR_VELOCITY
-from drone_path_planning.constants import TARGET_RELATIVE_DISPLACMENT
-from drone_path_planning.constants import TARGET_RELATIVE_VELOCITY
+from drone_path_planning.utilities.constants import ANTI_CLOCKWISE
+from drone_path_planning.utilities.constants import BACKWARD
+from drone_path_planning.utilities.constants import CLOCKWISE
+from drone_path_planning.utilities.constants import FORWARD
+from drone_path_planning.utilities.constants import REST
+from drone_path_planning.utilities.constants import SELF_ANGULAR_VELOCITY
+from drone_path_planning.utilities.constants import TARGET_ANGULAR_VELOCITY
+from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACMENT
+from drone_path_planning.utilities.constants import TARGET_RELATIVE_VELOCITY
 from drone_path_planning.environments.common import find_direction
 from drone_path_planning.environments.environment import Environment
 from drone_path_planning.environments.time_step import StepType

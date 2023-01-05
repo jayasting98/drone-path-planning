@@ -2,14 +2,14 @@ from typing import Dict
 
 import tensorflow as tf
 
-from drone_path_planning.constants import SELF
-from drone_path_planning.constants import TARGET
-from drone_path_planning.constants import SELF_ANGULAR_VELOCITY
-from drone_path_planning.constants import SELF_TARGET
-from drone_path_planning.constants import TARGET_ANGULAR_VELOCITY
-from drone_path_planning.constants import TARGET_RELATIVE_DISPLACMENT
-from drone_path_planning.constants import TARGET_RELATIVE_VELOCITY
-from drone_path_planning.constants import TARGET_SELF
+from drone_path_planning.utilities.constants import SELF
+from drone_path_planning.utilities.constants import TARGET
+from drone_path_planning.utilities.constants import SELF_ANGULAR_VELOCITY
+from drone_path_planning.utilities.constants import SELF_TARGET
+from drone_path_planning.utilities.constants import TARGET_ANGULAR_VELOCITY
+from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACMENT
+from drone_path_planning.utilities.constants import TARGET_RELATIVE_VELOCITY
+from drone_path_planning.utilities.constants import TARGET_SELF
 from drone_path_planning.graphs import EdgeSet
 from drone_path_planning.graphs import Graph
 from drone_path_planning.graphs import NodeSet
