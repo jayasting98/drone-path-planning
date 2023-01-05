@@ -6,6 +6,7 @@ from drone_path_planning.layers.edge_processors.edge_processor import EdgeProces
 
 class MultiLayerPerceptronEdgeProcessor(EdgeProcessor):
     def _create_edge_layer(
+        self,
         latent_size: int,
         num_hidden_layers: int,
         *args,

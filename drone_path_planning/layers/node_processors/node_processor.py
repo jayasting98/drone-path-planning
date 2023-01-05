@@ -38,6 +38,7 @@ class NodeProcessor(tf.keras.layers.Layer):
 
     @abc.abstractmethod
     def _create_node_layer(
+        self,
         latent_size: int,
         num_hidden_layers: int,
         *args,

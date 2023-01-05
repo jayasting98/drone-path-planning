@@ -43,6 +43,7 @@ class EdgeProcessor(tf.keras.layers.Layer):
 
     @abc.abstractmethod
     def _create_edge_layer(
+        self,
         latent_size: int,
         num_hidden_layers: int,
         *args,

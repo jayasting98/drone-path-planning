@@ -6,6 +6,7 @@ from drone_path_planning.layers.node_processors.node_processor import NodeProces
 
 class MultiLayerPerceptronNodeProcessor(NodeProcessor):
     def _create_node_layer(
+        self,
         latent_size: int,
         num_hidden_layers: int,
         *args,
