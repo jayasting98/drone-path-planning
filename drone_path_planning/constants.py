@@ -10,3 +10,10 @@ TARGET: str = 'target'
 
 SELF_TARGET: str = 'self_target'
 TARGET_SELF: str = 'target_self'
+
+
+ANTI_CLOCKWISE: str = 'anti_clockwise'
+BACKWARD: str = 'backward'
+CLOCKWISE: str = 'clockwise'
+FORWARD: str = 'forward'
+REST: str = 'rest'
