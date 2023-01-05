@@ -1,2 +1,3 @@
 from drone_path_planning.environments.environment import Environment
+from drone_path_planning.environments.time_step import StepType
 from drone_path_planning.environments.time_step import TimeStep
