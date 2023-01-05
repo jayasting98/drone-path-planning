@@ -26,12 +26,12 @@ class Environment:
 
   @abc.abstractmethod
   def render(self):
-    pass
+    raise NotImplementedError()
 
   @abc.abstractmethod
   def _reset(self) -> TimeStep:
-    pass
+    raise NotImplementedError()
 
   @abc.abstractmethod
   def _step(self, action: tf.Tensor) -> TimeStep:
-    pass
+    raise NotImplementedError()

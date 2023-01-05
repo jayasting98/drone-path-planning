@@ -49,4 +49,4 @@ class NodeProcessor(tf.keras.layers.Layer):
         should_layer_normalize=False,
         **kwargs,
     ) -> tf.keras.layers.Layer:
-        pass
+        raise NotImplementedError()

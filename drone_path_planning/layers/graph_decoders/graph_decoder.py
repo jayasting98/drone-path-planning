@@ -57,7 +57,7 @@ class GraphDecoder(tf.keras.layers.Layer):
 
     @abc.abstractmethod
     def _create_decoder(self, output_size: int) -> tf.keras.layers.Layer:
-        pass
+        raise NotImplementedError()
 
     def _create_set_decoders(self, output_spec_map: Dict[str, OutputComponentSetSpec]) -> SetDecoderMap:
         set_decoders: SetDecoderMap = dict()

@@ -30,4 +30,4 @@ class GraphProcessor(tf.keras.layers.Layer):
 
     @abc.abstractmethod
     def _create_graph_network_block(self) -> GraphNetworkBlock:
-        pass
+        raise NotImplementedError()

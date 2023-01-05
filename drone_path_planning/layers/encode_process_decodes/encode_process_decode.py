@@ -12,17 +12,17 @@ class EncodeProcessDecode(tf.keras.layers.Layer):
     @property
     @abc.abstractmethod
     def encoder(self) -> GraphEncoder:
-        pass
+        raise NotImplementedError()
 
     @property
     @abc.abstractmethod
     def processor(self) -> GraphProcessor:
-        pass
+        raise NotImplementedError()
 
     @property
     @abc.abstractmethod
     def decoder(self) -> GraphDecoder:
-        pass
+        raise NotImplementedError()
 
     def call(self, graph: Graph):
         encoded_graph = self.encoder(graph)

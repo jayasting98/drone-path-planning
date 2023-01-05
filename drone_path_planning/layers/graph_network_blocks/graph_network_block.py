@@ -46,20 +46,20 @@ class GraphNetworkBlock(tf.keras.layers.Layer):
 
     @abc.abstractmethod
     def _create_edge_processor(self) -> EdgeProcessor:
-        pass
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def _create_edge_to_node_aggregator(self) -> EdgeToNodeAggregator:
-        pass
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def _create_node_processor(self) -> NodeProcessor:
-        pass
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def _process_edge_sets(self, graph: Graph):
-        pass
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def _process_node_sets(self, graph: Graph):
-        pass
+        raise NotImplementedError()
