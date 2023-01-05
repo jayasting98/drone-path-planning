@@ -6,3 +6,7 @@ TARGET_RELATIVE_VELOCITY: str = 'target_relative_velocity'
 
 SELF: str = 'self'
 TARGET: str = 'target'
+
+
+SELF_TARGET: str = 'self_target'
+TARGET_SELF: str = 'target_self'
