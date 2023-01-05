@@ -25,7 +25,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
         num_hidden_layers: int,
         num_message_passing_steps: int,
         *args,
-        should_normalize=False,
+        should_layer_normalize=False,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
@@ -34,7 +34,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
             latent_size,
             num_hidden_layers,
             num_message_passing_steps,
-            should_normalize=should_normalize,
+            should_layer_normalize=should_layer_normalize,
         )
 
     def call(self, inputs: Dict[str, tf.Tensor]):
