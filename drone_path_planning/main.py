@@ -1,6 +1,14 @@
 import argparse
 
+from drone_path_planning.agents import SingleChaserSingleTargetAgent
+from drone_path_planning.environments import SingleChaserSingleMovingTargetEnvironment
+from drone_path_planning.graphs import OutputGraphSpec
 from drone_path_planning.routines import ROUTINES
+from drone_path_planning.utilities.constants import ANTI_CLOCKWISE
+from drone_path_planning.utilities.constants import BACKWARD
+from drone_path_planning.utilities.constants import CLOCKWISE
+from drone_path_planning.utilities.constants import FORWARD
+from drone_path_planning.utilities.constants import REST
 
 
 _PROGRAM_NAME = 'Drone Path Planning Reinforcement Learning Trainer'
@@ -8,6 +16,33 @@ _PROGRAM_DESCRIPTION = 'Use reinforcement learning to train a drone to plan its 
 
 
 _SCENARIO_PARAMETERS = {
+    'single-chaser_single-moving-target': {
+        'agent': SingleChaserSingleTargetAgent,
+        'agent_parameters': dict(
+            output_specs=OutputGraphSpec(
+                node_sets={
+                    'self': [
+                        {
+                            REST: 1,
+                            FORWARD: 1,
+                            BACKWARD: 1,
+                            ANTI_CLOCKWISE: 1,
+                            CLOCKWISE: 1,
+                        }
+                    ],
+                },
+                edge_sets=dict(),
+            ),
+            latent_size=128,
+            num_hidden_layers=2,
+            num_message_passing_steps=1,
+            tau=0.08,
+        ),
+        'training_environment': SingleChaserSingleMovingTargetEnvironment,
+        'training_environment_parameters': dict(),
+        'validation_environment': SingleChaserSingleMovingTargetEnvironment,
+        'validation_environment_parameters': dict(),
+    },
 }
 
 
