@@ -12,5 +12,6 @@ class NodeSet(ComponentSet, _NodeSetTuple):
     def replace(self, **kwargs):
         return self._replace(**kwargs)
 
+    @property
     def _features(self):
         return self.features

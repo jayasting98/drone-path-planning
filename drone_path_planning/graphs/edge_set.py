@@ -18,5 +18,6 @@ class EdgeSet(ComponentSet, _EdgeSetTuple):
     def replace(self, **kwargs):
         return self._replace(**kwargs)
 
+    @property
     def _features(self):
         return self.features
