@@ -15,3 +15,35 @@ This project is intended to run on Python 3.8 (the version of Python in the NUS 
 ```bash
 bash setup.sh
 ```
+
+## Usage
+
+Activate the Python virtual environment using the following command.
+
+```bash
+source venvs/VENV_NAME/bin/activate
+```
+
+For example, the `cuda` virtual environment can be activated using the following command.
+
+```bash
+source venvs/cuda/bin/activate
+```
+
+Then you can run the code using the following command.
+
+```bash
+python -m drone_path_planning.main ROUTINE SCENARIO
+```
+
+For example, you can train an agent in the single-chaser single-moving-target scenario using the `train` routine and the `single-chaser_single-moving-target` scenario using the following command.
+
+```bash
+python -m drone_path_planning.main train single-chaser_single-moving-target
+```
+
+You can use the following command for help and more information.
+
+```bash
+python -m drone_path_planning.main -h
+```
