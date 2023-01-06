@@ -11,7 +11,6 @@ from drone_path_planning.utilities.constants import FORWARD
 from drone_path_planning.utilities.constants import REST
 
 
-_PROGRAM_NAME = 'Drone Path Planning Reinforcement Learning Trainer'
 _PROGRAM_DESCRIPTION = 'Use reinforcement learning to train a drone to plan its path.'
 
 
@@ -48,7 +47,6 @@ _SCENARIO_PARAMETERS = {
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        prog=_PROGRAM_NAME,
         description=_PROGRAM_DESCRIPTION,
     )
     parser.add_argument('routine', choices=ROUTINES)
