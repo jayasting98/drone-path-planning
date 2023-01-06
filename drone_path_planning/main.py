@@ -59,10 +59,7 @@ def main():
     args: argparse.Namespace = _parse_args()
     routine = ROUTINES[args.routine]
     scenario = _SCENARIO_PARAMETERS[args.scenario]
-    agent = scenario['agent'](**scenario['agent_parameters'])
-    training_environment = scenario['training_environment'](**scenario['training_environment_parameters'])
-    validation_environment = scenario['validation_environment'](**scenario['validation_environment_parameters'])
-    routine(agent, training_environment, validation_environment)
+    routine(scenario)
 
 
 if __name__ == '__main__':

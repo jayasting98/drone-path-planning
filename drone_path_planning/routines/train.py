@@ -1,3 +1,4 @@
+from typing import Any
 from typing import Dict
 from typing import List
 
@@ -115,7 +116,10 @@ def _train(
     callback_list_callback.on_train_end(logs=training_logs)
 
 
-def train(agent: DeepQNetworkAgent, training_environment: Environment, validation_environment: Environment):
+def train(scenario: Dict[str, Any]):
+    agent = scenario['agent'](**scenario['agent_parameters'])
+    training_environment = scenario['training_environment'](**scenario['training_environment_parameters'])
+    validation_environment = scenario['validation_environment'](**scenario['validation_environment_parameters'])
     replay_buffer = ReplayBuffer()
     replay_buffer.fill(tf.function(agent.collect_step), training_environment, REPLAY_BUFFER_SIZE - 1, MAX_NUM_STEPS_PER_EPISODE)
     exponential_decay_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
