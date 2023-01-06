@@ -1,1 +1,2 @@
+from drone_path_planning.trainers.single_agent_deep_q_network_trainer import SingleAgentDeepQNetworkTrainer
 from drone_path_planning.trainers.trainer import Trainer
