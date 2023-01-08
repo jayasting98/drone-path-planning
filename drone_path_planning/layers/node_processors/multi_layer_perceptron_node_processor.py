@@ -15,7 +15,7 @@ class MultiLayerPerceptronNodeProcessor(NodeProcessor):
         kernel_regularizer=None,
         bias_regularizer=None,
         activity_regularizer=None,
-        should_layer_normalize=False,
+        should_layer_normalize: bool = False,
         **kwargs,
     ) -> tf.keras.layers.Layer:
         return MultiLayerPerceptron(

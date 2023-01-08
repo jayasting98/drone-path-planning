@@ -14,7 +14,7 @@ class MultiLayerPerceptronGraphProcessor(GraphProcessor):
         kernel_regularizer=None,
         bias_regularizer=None,
         activity_regularizer=None,
-        should_layer_normalize=False,
+        should_layer_normalize: bool = False,
         **kwargs,
     ):
         super().__init__(num_message_passing_steps, *args, **kwargs)

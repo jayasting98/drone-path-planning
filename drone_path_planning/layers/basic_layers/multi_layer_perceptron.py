@@ -13,7 +13,7 @@ class MultiLayerPerceptron(tf.keras.layers.Layer):
         kernel_regularizer=None,
         bias_regularizer=None,
         activity_regularizer=None,
-        should_layer_normalize=False,
+        should_layer_normalize: bool = False,
         **kwargs,
     ) -> None:
         super().__init__(*args, **kwargs)

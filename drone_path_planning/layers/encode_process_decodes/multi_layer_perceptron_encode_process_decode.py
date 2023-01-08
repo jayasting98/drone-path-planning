@@ -13,7 +13,7 @@ class MultiLayerPerceptronEncodeProcessDecode(EncodeProcessDecode):
         num_hidden_layers: int,
         num_message_passing_steps: int,
         *args,
-        should_layer_normalize=False,
+        should_layer_normalize: bool = False,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
