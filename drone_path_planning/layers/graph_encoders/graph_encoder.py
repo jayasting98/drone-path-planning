@@ -1,3 +1,4 @@
+from typing import Any
 from typing import Dict
 from typing import TypeVar
 
@@ -11,6 +12,7 @@ from drone_path_planning.layers.basic_layers import MultiLayerPerceptron
 T = TypeVar('T', bound=ComponentSet)
 
 
+@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.graph_encoders')
 class GraphEncoder(tf.keras.layers.Layer):
   def __init__(
       self,
@@ -28,11 +30,11 @@ class GraphEncoder(tf.keras.layers.Layer):
     super().__init__(*args, **kwargs)
     self._latent_size = latent_size
     self._num_hidden_layers = num_hidden_layers
-    self._activation = activation
+    self._activation = tf.keras.activations.get(activation)
     self._use_bias = use_bias
-    self._kernel_regularizer = kernel_regularizer
-    self._bias_regularizer = bias_regularizer
-    self._activity_regularizer = activity_regularizer
+    self._kernel_regularizer = tf.keras.regularizers.get(kernel_regularizer)
+    self._bias_regularizer = tf.keras.regularizers.get(bias_regularizer)
+    self._activity_regularizer = tf.keras.regularizers.get(activity_regularizer)
     self._should_layer_normalize = should_layer_normalize
 
   def build(self, input_shape):
@@ -44,6 +46,20 @@ class GraphEncoder(tf.keras.layers.Layer):
     encoded_edge_sets = self._encode_sets(self._edge_encoders, graph.edge_sets)
     encoded_graph = graph._replace(node_sets=encoded_node_sets, edge_sets=encoded_edge_sets)
     return encoded_graph
+
+  def get_config(self) -> Dict[str, Any]:
+    config = super().get_config()
+    config.update(
+        latent_size=self._latent_size,
+        num_hidden_layers=self._num_hidden_layers,
+        activation=tf.keras.activations.serialize(self._activation),
+        use_bias=self._use_bias,
+        kernel_regularizer=tf.keras.regularizers.serialize(self._kernel_regularizer),
+        bias_regularizer=tf.keras.regularizers.serialize(self._bias_regularizer),
+        activity_regularizer=tf.keras.regularizers.serialize(self._activity_regularizer),
+        should_layer_normalize=self._should_layer_normalize,
+    )
+    return config
 
   def _create_encoder(self) -> tf.keras.layers.Layer:
     encoder = MultiLayerPerceptron(
