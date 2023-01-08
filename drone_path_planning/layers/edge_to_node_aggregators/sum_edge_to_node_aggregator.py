@@ -3,6 +3,7 @@ import tensorflow as tf
 from drone_path_planning.layers.edge_to_node_aggregators.edge_to_node_aggregator import EdgeToNodeAggregator
 
 
+@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.edge_to_node_aggregators')
 class SumEdgeToNodeAggregator(EdgeToNodeAggregator):
     def call(self, inputs, *args, **kwargs):
         edge_set, node_count = inputs
