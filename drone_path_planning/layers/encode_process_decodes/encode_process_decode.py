@@ -8,6 +8,7 @@ from drone_path_planning.layers.graph_encoders import GraphEncoder
 from drone_path_planning.layers.graph_processors import GraphProcessor
 
 
+@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.encode_process_decodes')
 class EncodeProcessDecode(tf.keras.layers.Layer):
     @property
     @abc.abstractmethod
