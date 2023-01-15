@@ -38,8 +38,9 @@ class GraphEncoder(tf.keras.layers.Layer):
         self._should_layer_normalize = should_layer_normalize
 
     def build(self, input_shape):
-        self._node_encoders: Dict[str, tf.keras.layers.Layer] = {set_name: self._create_encoder() for set_name in input_shape.node_sets}
-        self._edge_encoders: Dict[str, tf.keras.layers.Layer] = {set_name: self._create_encoder() for set_name in input_shape.edge_sets}
+        # Indexing instead of calling attributes of NamedTuple objects for building when loading models.
+        self._node_encoders: Dict[str, tf.keras.layers.Layer] = {set_name: self._create_encoder() for set_name in input_shape[0]}
+        self._edge_encoders: Dict[str, tf.keras.layers.Layer] = {set_name: self._create_encoder() for set_name in input_shape[1]}
 
     def call(self, graph: Graph):
         encoded_node_sets = self._encode_sets(self._node_encoders, graph.node_sets)

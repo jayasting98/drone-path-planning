@@ -36,9 +36,10 @@ class GraphNetworkBlock(tf.keras.layers.Layer):
         self._should_layer_normalize = should_layer_normalize
 
     def build(self, input_shape):
-        self._edge_processors: Dict[str, EdgeProcessor] = {set_name: self._create_edge_processor() for set_name, _ in input_shape.edge_sets.items()}
-        self._edge_to_node_aggregators: Dict[str, EdgeToNodeAggregator] = {set_name: self._create_edge_to_node_aggregator() for set_name, _ in input_shape.edge_sets.items()}
-        self._node_processors: Dict[str, NodeProcessor] = {set_name: self._create_node_processor() for set_name, _ in input_shape.node_sets.items()}
+        # Indexing instead of calling attributes of NamedTuple objects for building when loading models.
+        self._edge_processors: Dict[str, EdgeProcessor] = {set_name: self._create_edge_processor() for set_name, _ in input_shape[1].items()}
+        self._edge_to_node_aggregators: Dict[str, EdgeToNodeAggregator] = {set_name: self._create_edge_to_node_aggregator() for set_name, _ in input_shape[1].items()}
+        self._node_processors: Dict[str, NodeProcessor] = {set_name: self._create_node_processor() for set_name, _ in input_shape[0].items()}
 
     def call(self, graph: Graph):
         new_edge_graph = self._process_edge_sets(graph)
