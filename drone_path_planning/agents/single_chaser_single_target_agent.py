@@ -10,7 +10,7 @@ from drone_path_planning.graphs import OutputGraphSpec
 from drone_path_planning.models import SingleChaserSingleTargetGraphQNetwork
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.agents')
+@tf.keras.utils.register_keras_serializable('drone_path_planning.agents')
 class SingleChaserSingleTargetAgent(DeepQNetworkAgent):
     def __init__(
         self,
