@@ -11,8 +11,16 @@ from drone_path_planning.utilities.training_helpers import Transition
 
 
 class DeepQNetworkAgent(tf.keras.Model):
+    def call(self, inputs: Dict[str, tf.Tensor], should_use_target_model: bool = False):
+        predictions: Dict[str, tf.Tensor]
+        if should_use_target_model:
+            predictions = self.target_model(inputs)
+        else:
+            predictions = self.model(inputs)
+        return predictions
+
     def collect_step(self, time_step: TimeStep) -> tf.Tensor:
-        q_values = self.target_model(time_step.observation)
+        q_values = self(time_step.observation)
         concatenated_q_values = tf.concat(list(q_values.values()), -1)
         num_actions = tf.shape(concatenated_q_values)[-1]
         should_take_random_step = tf.random.uniform([]) < self.epsilon
@@ -27,7 +35,7 @@ class DeepQNetworkAgent(tf.keras.Model):
         time_step, action, _ = transition
         target_q_value = tf.stop_gradient(self._determine_target_q_value(transition.next_time_step))
         with tf.GradientTape() as tape:
-            q_values: Dict[str, tf.Tensor] = self.model(time_step.observation)
+            q_values: Dict[str, tf.Tensor] = self(time_step.observation)
             concatenated_q_values = tf.concat(list(q_values.values()), -1)
             q_value = concatenated_q_values[:, action:action + 1]
             loss = self._calculate_loss(target_q_value, q_value)
@@ -61,7 +69,7 @@ class DeepQNetworkAgent(tf.keras.Model):
         return metrics
 
     def predict_step(self, time_step: TimeStep) -> tf.Tensor:
-        q_values: Dict[str, tf.Tensor] = self.model(time_step.observation)
+        q_values: Dict[str, tf.Tensor] = self(time_step.observation)
         concatenated_q_values = tf.concat(list(q_values.values()), -1)
         action = tf.squeeze(tf.math.argmax(concatenated_q_values, axis=-1))
         return action
@@ -113,7 +121,7 @@ class DeepQNetworkAgent(tf.keras.Model):
         return last_target_q_value
 
     def _calculate_mid_target_q_value(self, next_time_step: TimeStep) -> tf.Tensor:
-        next_next_q_values: Dict[str, tf.Tensor] = self.target_model(next_time_step.observation)
+        next_next_q_values: Dict[str, tf.Tensor] = self(next_time_step.observation, should_use_target_model=True)
         concatenated_next_next_q_values = tf.concat(list(next_next_q_values.values()), -1)
         mid_target_q_value = next_time_step.reward + self.gamma * tf.reduce_max(concatenated_next_next_q_values, axis=-1, keepdims=True)
         return mid_target_q_value
