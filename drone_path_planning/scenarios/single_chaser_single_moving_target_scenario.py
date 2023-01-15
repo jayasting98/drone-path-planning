@@ -27,7 +27,7 @@ _REPLAY_BUFFER_SIZE: int = _MAX_NUM_STEPS_PER_EPISODE * 64
 
 
 class SingleChaserSingleMovingTargetScenario(Scenario):
-    def create_trainer(self) -> Trainer:
+    def create_trainer(self, save_dir: str) -> Trainer:
         agent = SingleChaserSingleTargetAgent(
             output_specs=OutputGraphSpec(
                 node_sets={
@@ -67,6 +67,7 @@ class SingleChaserSingleMovingTargetScenario(Scenario):
             num_epochs=_NUM_EPOCHS,
             num_steps_per_epoch=_NUM_STEPS_PER_EPOCH,
             max_num_steps_per_episode=_MAX_NUM_STEPS_PER_EPISODE,
+            save_dir=save_dir,
             validation_environment=validation_environment,
             num_val_episodes=_NUM_VAL_EPISODES,
             max_num_steps_per_val_episode=_MAX_NUM_STEPS_PER_VAL_EPISODE,

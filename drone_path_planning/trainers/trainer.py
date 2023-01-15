@@ -13,7 +13,12 @@ class Trainer:
     def train(self):
         raise NotImplementedError()
 
-    def _create_training_callbacks(self, num_epochs: int, num_steps_per_epoch: int) -> List[tf.keras.callbacks.Callback]:
+    def _create_training_callbacks(
+        self,
+        num_epochs: int,
+        num_steps_per_epoch: int,
+        save_dir: str,
+    ) -> List[tf.keras.callbacks.Callback]:
         callbacks = []
         progbar_logger_callback = tf.keras.callbacks.ProgbarLogger(
             count_mode='steps',
@@ -26,4 +31,8 @@ class Trainer:
         }
         progbar_logger_callback.set_params(progbar_logger_callback_params)
         callbacks.append(progbar_logger_callback)
+        model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+            save_dir,
+        )
+        callbacks.append(model_checkpoint_callback)
         return callbacks

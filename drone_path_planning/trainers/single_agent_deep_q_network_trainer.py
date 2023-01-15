@@ -26,6 +26,7 @@ class SingleAgentDeepQNetworkTrainer(Trainer):
         num_epochs: int,
         num_steps_per_epoch: int,
         max_num_steps_per_episode: int,
+        save_dir: str,
         validation_environment: Optional[Environment],
         num_val_episodes: Optional[int] = None,
         max_num_steps_per_val_episode: Optional[int] = None,
@@ -38,6 +39,7 @@ class SingleAgentDeepQNetworkTrainer(Trainer):
         callbacks = self._create_training_callbacks(
             num_epochs,
             num_steps_per_epoch,
+            save_dir,
         )
         self._callback_list_callback = tf.keras.callbacks.CallbackList(
             callbacks=callbacks,
