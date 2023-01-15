@@ -4,7 +4,7 @@ from drone_path_planning.layers.graph_decoders.graph_decoder import GraphDecoder
 from drone_path_planning.layers.basic_layers import MultiLayerPerceptron
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.graph_decoders')
+@tf.keras.utils.register_keras_serializable('dpp.layers.gds', 'mlp_gd')
 class MultiLayerPerceptronGraphDecoder(GraphDecoder):
     def _create_decoder(self, output_size: int) -> tf.keras.layers.Layer:
         decoder = MultiLayerPerceptron(

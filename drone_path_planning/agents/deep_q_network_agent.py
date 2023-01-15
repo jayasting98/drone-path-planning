@@ -10,7 +10,7 @@ from drone_path_planning.environments import TimeStep
 from drone_path_planning.utilities.training_helpers import Transition
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.agents')
+@tf.keras.utils.register_keras_serializable('dpp.agents', 'dqn_agent')
 class DeepQNetworkAgent(tf.keras.Model):
     def call(self, inputs: Dict[str, tf.Tensor], should_use_target_model: bool = False):
         predictions: Dict[str, tf.Tensor]

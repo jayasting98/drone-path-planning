@@ -4,7 +4,7 @@ from typing import Dict
 import tensorflow as tf
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.basic_layers')
+@tf.keras.utils.register_keras_serializable('dpp.layers.bls', 'mlp')
 class MultiLayerPerceptron(tf.keras.layers.Layer):
     def __init__(
         self,

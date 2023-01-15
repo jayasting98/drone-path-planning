@@ -10,7 +10,7 @@ from drone_path_planning.layers.graph_encoders import GraphEncoder
 from drone_path_planning.layers.graph_processors import MultiLayerPerceptronGraphProcessor
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.encode_process_decodes')
+@tf.keras.utils.register_keras_serializable('dpp.layers.epds', 'mlp_epd')
 class MultiLayerPerceptronEncodeProcessDecode(EncodeProcessDecode):
     def __init__(
         self,

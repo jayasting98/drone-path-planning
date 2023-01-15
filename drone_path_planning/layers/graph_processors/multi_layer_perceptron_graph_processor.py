@@ -7,7 +7,7 @@ from drone_path_planning.layers.graph_network_blocks import MultiLayerPerceptron
 from drone_path_planning.layers.graph_processors.graph_processor import GraphProcessor
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.graph_processors')
+@tf.keras.utils.register_keras_serializable('dpp.layers.gps', 'mlp_gp')
 class MultiLayerPerceptronGraphProcessor(GraphProcessor):
     def __init__(
         self,

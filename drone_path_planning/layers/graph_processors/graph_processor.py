@@ -9,7 +9,7 @@ from drone_path_planning.graphs import Graph
 from drone_path_planning.layers.graph_network_blocks import GraphNetworkBlock
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.graph_processors')
+@tf.keras.utils.register_keras_serializable('dpp.layers.gps', 'gp')
 class GraphProcessor(tf.keras.layers.Layer):
     def __init__(
         self,

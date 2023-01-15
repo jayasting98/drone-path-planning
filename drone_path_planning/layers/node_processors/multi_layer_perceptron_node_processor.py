@@ -4,7 +4,7 @@ from drone_path_planning.layers.basic_layers import MultiLayerPerceptron
 from drone_path_planning.layers.node_processors.node_processor import NodeProcessor
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.node_processors')
+@tf.keras.utils.register_keras_serializable('dpp.layers.nps', 'mlp_np')
 class MultiLayerPerceptronNodeProcessor(NodeProcessor):
     def _create_node_layer(
         self,

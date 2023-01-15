@@ -5,7 +5,7 @@ from typing import Dict
 import tensorflow as tf
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.node_processors')
+@tf.keras.utils.register_keras_serializable('dpp.layers.nps', 'np')
 class NodeProcessor(tf.keras.layers.Layer):
     def __init__(
         self,

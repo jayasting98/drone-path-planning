@@ -12,7 +12,7 @@ from drone_path_planning.layers.basic_layers import MultiLayerPerceptron
 T = TypeVar('T', bound=ComponentSet)
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.graph_encoders')
+@tf.keras.utils.register_keras_serializable('dpp.layers.ges', 'ge')
 class GraphEncoder(tf.keras.layers.Layer):
     def __init__(
         self,

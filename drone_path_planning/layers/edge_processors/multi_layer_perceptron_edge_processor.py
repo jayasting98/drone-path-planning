@@ -4,7 +4,7 @@ from drone_path_planning.layers.basic_layers import MultiLayerPerceptron
 from drone_path_planning.layers.edge_processors.edge_processor import EdgeProcessor
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.edge_processors')
+@tf.keras.utils.register_keras_serializable('dpp.layers.eps', 'mlp_ep')
 class MultiLayerPerceptronEdgeProcessor(EdgeProcessor):
     def _create_edge_layer(
         self,

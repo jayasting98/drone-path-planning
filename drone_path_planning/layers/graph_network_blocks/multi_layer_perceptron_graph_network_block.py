@@ -10,7 +10,7 @@ from drone_path_planning.layers.node_processors import MultiLayerPerceptronNodeP
 from drone_path_planning.layers.node_processors import NodeProcessor
 
 
-@tf.keras.utils.register_keras_serializable('drone_path_planning.layers.graph_network_blocks')
+@tf.keras.utils.register_keras_serializable('dpp.layers.gnbs', 'mlp_gnb')
 class MultiLayerPerceptronGraphNetworkBlock(GraphNetworkBlock):
     def _create_edge_processor(self) -> EdgeProcessor:
         return MultiLayerPerceptronEdgeProcessor(
