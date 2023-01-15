@@ -115,7 +115,7 @@ class SingleChaserSingleTargetAgent(DeepQNetworkAgent):
 
     def _create_model(self) -> tf.keras.Model:
         model = SingleChaserSingleTargetGraphQNetwork(
-            self._output_specs,
+            self._output_specs.copy(),
             self._latent_size,
             self._num_hidden_layers,
             self._num_message_passing_steps,

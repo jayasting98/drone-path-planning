@@ -37,7 +37,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
         self._num_message_passing_steps = num_message_passing_steps
         self._should_layer_normalize = should_layer_normalize
         self._learned_model = MultiLayerPerceptronEncodeProcessDecode(
-            output_specs,
+            output_specs.copy(),
             latent_size,
             num_hidden_layers,
             num_message_passing_steps,

@@ -54,7 +54,7 @@ class MultiLayerPerceptronEncodeProcessDecode(EncodeProcessDecode):
     def decoder(self):
         if not hasattr(self, '_decoder'):
             self._decoder = MultiLayerPerceptronGraphDecoder(
-                self._output_specs,
+                self._output_specs.copy(),
                 self._latent_size,
                 self._num_hidden_layers,
                 should_layer_normalize=self._should_layer_normalize,
