@@ -29,7 +29,7 @@ def main():
     args: argparse.Namespace = _parse_args()
     routine = ROUTINES[args.routine]
     scenario = _SCENARIOS[args.scenario]()
-    routine(scenario)
+    routine(scenario, args)
 
 
 if __name__ == '__main__':
