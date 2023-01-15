@@ -41,13 +41,22 @@ source venvs/cuda/bin/activate
 Then you can run the code using the following command.
 
 ```bash
-python -m drone_path_planning.main ROUTINE SCENARIO
+python -m drone_path_planning.main ROUTINE SCENARIO [options]
 ```
 
-For example, you can train an agent in the single-chaser single-moving-target scenario using the `train` routine and the `single-chaser_single-moving-target` scenario using the following command.
+For example, you can train an agent in the single-chaser single-moving-target scenario using the `train` routine and the `single-chaser_single-moving-target` scenario and save the model to the `data/single-chaser_single-moving-target/0/saves/checkpoint` folder using the following command.
 
 ```bash
-python -m drone_path_planning.main train single-chaser_single-moving-target
+python -m drone_path_planning.main train single-chaser_single-moving-target --save_dir=data/single-chaser_single-moving-target/0/saves/checkpoint
+```
+
+OR
+
+```bash
+export SCENARIO="single-chaser_single-moving-target"
+export RUN="0"
+export SAVE_DIR="data/${SCENARIO}/${RUN}/saves/checkpoint"
+python -m drone_path_planning.main train ${SCENARIO} --save_dir=${SAVE_DIR}
 ```
 
 You can use the following command for help and more information.
