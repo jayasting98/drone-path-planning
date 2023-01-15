@@ -28,26 +28,30 @@ _REPLAY_BUFFER_SIZE: int = _MAX_NUM_STEPS_PER_EPISODE * 64
 
 class SingleChaserSingleMovingTargetScenario(Scenario):
     def create_trainer(self, save_dir: str) -> Trainer:
-        agent = SingleChaserSingleTargetAgent(
-            output_specs=OutputGraphSpec(
-                node_sets={
-                    'self': [
-                        {
-                            REST: 1,
-                            FORWARD: 1,
-                            BACKWARD: 1,
-                            ANTI_CLOCKWISE: 1,
-                            CLOCKWISE: 1,
-                        },
-                    ],
-                },
-                edge_sets=dict(),
-            ),
-            latent_size=128,
-            num_hidden_layers=2,
-            num_message_passing_steps=1,
-            tau=0.08,
-        )
+        agent: SingleChaserSingleTargetAgent
+        try:
+            agent = tf.keras.models.load_model(save_dir)
+        except IOError:
+            agent = SingleChaserSingleTargetAgent(
+                output_specs=OutputGraphSpec(
+                    node_sets={
+                        'self': [
+                            {
+                                REST: 1,
+                                FORWARD: 1,
+                                BACKWARD: 1,
+                                ANTI_CLOCKWISE: 1,
+                                CLOCKWISE: 1,
+                            },
+                        ],
+                    },
+                    edge_sets=dict(),
+                ),
+                latent_size=128,
+                num_hidden_layers=2,
+                num_message_passing_steps=1,
+                tau=0.08,
+            )
         optimizer = tf.keras.optimizers.Adam(
             learning_rate=tf.keras.optimizers.schedules.ExponentialDecay(
                 initial_learning_rate=_INITIAL_LEARNING_RATE,
