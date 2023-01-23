@@ -1,8 +1,6 @@
 import abc
 from typing import Optional
 
-import tensorflow as tf
-
 from drone_path_planning.trainers import Trainer
 
 
