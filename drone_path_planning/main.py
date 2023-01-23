@@ -21,7 +21,7 @@ def _parse_args() -> argparse.Namespace:
     )
     parser.add_argument('routine', choices=ROUTINES)
     parser.add_argument('scenario', choices=_SCENARIOS)
-    parser.add_argument('--save_dir')
+    parser.add_argument('--save_dir', required=True)
     args = parser.parse_args()
     return args
 
