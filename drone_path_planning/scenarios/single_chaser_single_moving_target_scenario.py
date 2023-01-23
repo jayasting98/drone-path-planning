@@ -1,3 +1,5 @@
+from typing import Optional
+
 import tensorflow as tf
 
 from drone_path_planning.agents import SingleChaserSingleTargetAgent
@@ -27,7 +29,7 @@ _REPLAY_BUFFER_SIZE: int = _MAX_NUM_STEPS_PER_EPISODE * 64
 
 
 class SingleChaserSingleMovingTargetScenario(Scenario):
-    def create_trainer(self, save_dir: str) -> Trainer:
+    def create_trainer(self, save_dir: str, logs_dir: Optional[str] = None) -> Trainer:
         agent: SingleChaserSingleTargetAgent
         try:
             agent = tf.keras.models.load_model(save_dir)
@@ -72,6 +74,7 @@ class SingleChaserSingleMovingTargetScenario(Scenario):
             num_steps_per_epoch=_NUM_STEPS_PER_EPOCH,
             max_num_steps_per_episode=_MAX_NUM_STEPS_PER_EPISODE,
             save_dir=save_dir,
+            logs_dir=logs_dir,
             validation_environment=validation_environment,
             num_val_episodes=_NUM_VAL_EPISODES,
             max_num_steps_per_val_episode=_MAX_NUM_STEPS_PER_VAL_EPISODE,

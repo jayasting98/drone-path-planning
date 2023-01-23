@@ -30,6 +30,7 @@ class SingleAgentDeepQNetworkTrainer(Trainer):
         validation_environment: Optional[Environment],
         num_val_episodes: Optional[int] = None,
         max_num_steps_per_val_episode: Optional[int] = None,
+        logs_dir: Optional[str] = None,
     ):
         self._agent = agent
         self._optimizer = optimizer
@@ -40,6 +41,7 @@ class SingleAgentDeepQNetworkTrainer(Trainer):
             num_epochs,
             num_steps_per_epoch,
             save_dir,
+            logs_dir=logs_dir,
         )
         self._callback_list_callback = tf.keras.callbacks.CallbackList(
             callbacks=callbacks,

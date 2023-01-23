@@ -1,5 +1,7 @@
 import abc
+import os
 from typing import List
+from typing import Optional
 
 import tensorflow as tf
 
@@ -18,6 +20,7 @@ class Trainer:
         num_epochs: int,
         num_steps_per_epoch: int,
         save_dir: str,
+        logs_dir: Optional[str] = None,
     ) -> List[tf.keras.callbacks.Callback]:
         callbacks = []
         progbar_logger_callback = tf.keras.callbacks.ProgbarLogger(
@@ -35,4 +38,12 @@ class Trainer:
             save_dir,
         )
         callbacks.append(model_checkpoint_callback)
+        if logs_dir is not None:
+            os.makedirs(logs_dir, exist_ok=True)
+            logs_filepath = os.path.join(logs_dir, 'training_logs.csv')
+            csv_logger_callback = tf.keras.callbacks.CSVLogger(
+                logs_filepath,
+                append=True,
+            )
+            callbacks.append(csv_logger_callback)
         return callbacks

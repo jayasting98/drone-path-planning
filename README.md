@@ -44,10 +44,10 @@ Then you can run the code using the following command.
 python -m drone_path_planning.main ROUTINE SCENARIO [options]
 ```
 
-For example, you can train an agent in the single-chaser single-moving-target scenario using the `train` routine and the `single-chaser_single-moving-target` scenario and save the model to the `data/single-chaser_single-moving-target/0/saves/checkpoint` folder using the following command.
+For example, if you want to train an agent in the single-chaser single-moving-target scenario, use the `train` routine and the `single-chaser_single-moving-target` scenario. If you want to save the model to the `data/single-chaser_single-moving-target/0/saves/checkpoint` folder, use the `--save_dir` parameter. If you want training logs recorded into the `data/single-chaser_single-moving-target/0/logs` directory, use the `--logs_dir` argument.
 
 ```bash
-python -m drone_path_planning.main train single-chaser_single-moving-target --save_dir=data/single-chaser_single-moving-target/0/saves/checkpoint
+python -m drone_path_planning.main train single-chaser_single-moving-target --save_dir=data/single-chaser_single-moving-target/0/saves/checkpoint --logs_dir=data/single-chaser_single-moving-target/0/logs
 ```
 
 OR
@@ -56,7 +56,8 @@ OR
 export SCENARIO="single-chaser_single-moving-target"
 export RUN="0"
 export SAVE_DIR="data/${SCENARIO}/${RUN}/saves/checkpoint"
-python -m drone_path_planning.main train ${SCENARIO} --save_dir=${SAVE_DIR}
+export LOGS_DIR="data/${SCENARIO}/${RUN}/logs"
+python -m drone_path_planning.main train ${SCENARIO} --save_dir=${SAVE_DIR} --logs_dir=${LOGS_DIR}
 ```
 
 You can use the following command for help and more information.
