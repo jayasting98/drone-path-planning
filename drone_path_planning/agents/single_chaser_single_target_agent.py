@@ -2,7 +2,6 @@ from typing import Any
 from typing import Dict
 from typing import List
 
-import numpy as np
 import tensorflow as tf
 
 from drone_path_planning.agents.deep_q_network_agent import DeepQNetworkAgent
@@ -54,16 +53,12 @@ class SingleChaserSingleTargetAgent(DeepQNetworkAgent):
 
     def get_config(self) -> Dict[str, Any]:
         config = super().get_config()
-        epsilon_tensor: tf.Tensor = self._epsilon.read_value()
-        epsilon_arr: np.ndarray = epsilon_tensor.eval()
-        epsilon = epsilon_arr.item()
         config.update(
             output_node_set_specs=self._output_specs.node_sets,
             output_edge_set_specs=self._output_specs.edge_sets,
             latent_size=self._latent_size,
             num_hidden_layers=self._num_hidden_layers,
             num_message_passing_steps=self._num_message_passing_steps,
-            initial_epsilon=epsilon,
             epsilon_decay_rate=self._epsilon_decay_rate,
             gamma=self._gamma,
             tau=self._tau,
