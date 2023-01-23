@@ -19,7 +19,7 @@ from drone_path_planning.layers.encode_process_decodes import MultiLayerPerceptr
 
 
 @tf.keras.utils.register_keras_serializable('dpp.models', 'c1_t1_gqn')
-class SingleChaserSingleTargetGraphQNetwork(tf.keras.layers.Layer):
+class SingleChaserSingleTargetGraphQNetwork(tf.keras.Model):
     def __init__(
         self,
         output_specs: OutputGraphSpec,
