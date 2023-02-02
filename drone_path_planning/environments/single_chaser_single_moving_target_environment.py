@@ -12,7 +12,11 @@ from drone_path_planning.utilities.constants import CLOCKWISE
 from drone_path_planning.utilities.constants import FORWARD
 from drone_path_planning.utilities.constants import REST
 from drone_path_planning.utilities.constants import SELF_ANGULAR_VELOCITY
+from drone_path_planning.utilities.constants import SELF_DIRECTION
+from drone_path_planning.utilities.constants import SELF_DISPLACEMENT
 from drone_path_planning.utilities.constants import TARGET_ANGULAR_VELOCITY
+from drone_path_planning.utilities.constants import TARGET_DIRECTION
+from drone_path_planning.utilities.constants import TARGET_DISPLACEMENT
 from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACMENT
 from drone_path_planning.utilities.constants import TARGET_RELATIVE_VELOCITY
 from drone_path_planning.environments.common import find_direction
@@ -120,6 +124,14 @@ class SingleChaserSingleMovingTargetEnvironment(Environment):
         image = PIL.Image.frombytes('RGB', fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
         plt.close(fig)
         return image
+
+    def generate_state_data_for_plotting(self) -> Dict[str, tf.Tensor]:
+        state_data = dict()
+        state_data[SELF_DIRECTION] = find_direction(self._angular_displacement)
+        state_data[SELF_DISPLACEMENT] = self._displacement
+        state_data[TARGET_DIRECTION] = find_direction(self._target_angular_displacement)
+        state_data[TARGET_DISPLACEMENT] = self._target_displacement
+        return state_data
 
     def _reset(self) -> TimeStep:
         self._initialise_state()

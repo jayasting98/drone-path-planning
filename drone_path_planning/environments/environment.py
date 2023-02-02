@@ -1,4 +1,5 @@
 import abc
+from typing import Dict
 
 import tensorflow as tf
 
@@ -26,6 +27,10 @@ class Environment:
 
     @abc.abstractmethod
     def render(self):
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def generate_state_data_for_plotting(self) -> Dict[str, tf.Tensor]:
         raise NotImplementedError()
 
     @abc.abstractmethod
