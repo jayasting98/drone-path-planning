@@ -46,4 +46,12 @@ class Trainer:
                 append=True,
             )
             callbacks.append(csv_logger_callback)
+            tensor_board_callback = tf.keras.callbacks.TensorBoard(
+                logs_dir,
+                histogram_freq=1,
+                write_images=True,
+                write_steps_per_second=True,
+                profile_batch=(10, 20),
+            )
+            callbacks.append(tensor_board_callback)
         return callbacks

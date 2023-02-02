@@ -99,7 +99,7 @@ class SingleAgentDeepQNetworkTrainer(Trainer):
             if self._validation_environment is not None:
                 val_logs = self._validate()
                 epoch_logs.update({f'val_{key}': value for key, value in val_logs.items()})
-            self._callback_list_callback.on_epoch_end(float(i), logs=epoch_logs)
+            self._callback_list_callback.on_epoch_end(i, logs=epoch_logs)
             training_logs = epoch_logs
         self._callback_list_callback.on_train_end(logs=training_logs)
 
