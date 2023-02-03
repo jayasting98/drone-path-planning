@@ -4,6 +4,8 @@ import tensorflow as tf
 
 from drone_path_planning.agents import SingleChaserSingleTargetAgent
 from drone_path_planning.environments import SingleChaserSingleMovingTargetEnvironment
+from drone_path_planning.evaluators import Evaluator
+from drone_path_planning.evaluators import SingleAgentDeepQNetworkEvaluator
 from drone_path_planning.graphs import OutputGraphSpec
 from drone_path_planning.scenarios.scenario import Scenario
 from drone_path_planning.trainers import SingleAgentDeepQNetworkTrainer
@@ -26,6 +28,8 @@ _MAX_NUM_STEPS_PER_VAL_EPISODE: int = _MAX_NUM_STEPS_PER_EPISODE
 _NUM_STEPS_PER_EPOCH: int = _MAX_NUM_STEPS_PER_EPISODE * 8
 _NUM_EPOCHS: int = _NUM_ITERATIONS // _NUM_STEPS_PER_EPOCH
 _REPLAY_BUFFER_SIZE: int = _MAX_NUM_STEPS_PER_EPISODE * 64
+_NUM_EVAL_EPISODES: int = 16
+_MAX_NUM_STEPS_PER_EVAL_EPISODE: int = _MAX_NUM_STEPS_PER_EPISODE
 
 
 class SingleChaserSingleMovingTargetScenario(Scenario):
@@ -80,3 +84,39 @@ class SingleChaserSingleMovingTargetScenario(Scenario):
             max_num_steps_per_val_episode=_MAX_NUM_STEPS_PER_VAL_EPISODE,
         )
         return trainer
+
+    def create_evaluator(self, save_dir: str, plot_data_dir: str, logs_dir: Optional[str] = None) -> Evaluator:
+        agent: SingleChaserSingleTargetAgent
+        try:
+            agent = tf.keras.models.load_model(save_dir)
+        except IOError:
+            agent = SingleChaserSingleTargetAgent(
+                output_specs=OutputGraphSpec(
+                    node_sets={
+                        'self': [
+                            {
+                                REST: 1,
+                                FORWARD: 1,
+                                BACKWARD: 1,
+                                ANTI_CLOCKWISE: 1,
+                                CLOCKWISE: 1,
+                            },
+                        ],
+                    },
+                    edge_sets=dict(),
+                ),
+                latent_size=128,
+                num_hidden_layers=2,
+                num_message_passing_steps=1,
+                tau=0.08,
+            )
+        environment = SingleChaserSingleMovingTargetEnvironment()
+        evaluator = SingleAgentDeepQNetworkEvaluator(
+            agent=agent,
+            environment=environment,
+            plot_data_dir=plot_data_dir,
+            num_episodes=_NUM_EVAL_EPISODES,
+            max_num_steps_per_episode=_MAX_NUM_STEPS_PER_EVAL_EPISODE,
+            logs_dir=logs_dir,
+        )
+        return evaluator
