@@ -1,4 +1,5 @@
 from typing import Optional
+from typing import Tuple
 
 import tensorflow as tf
 
@@ -7,6 +8,8 @@ from drone_path_planning.environments import SingleChaserSingleMovingTargetEnvir
 from drone_path_planning.evaluators import Evaluator
 from drone_path_planning.evaluators import SingleAgentDeepQNetworkEvaluator
 from drone_path_planning.graphs import OutputGraphSpec
+from drone_path_planning.plotters import ChaserTargetPlotter
+from drone_path_planning.plotters import Plotter
 from drone_path_planning.scenarios.scenario import Scenario
 from drone_path_planning.trainers import SingleAgentDeepQNetworkTrainer
 from drone_path_planning.trainers import Trainer
@@ -30,6 +33,12 @@ _NUM_EPOCHS: int = _NUM_ITERATIONS // _NUM_STEPS_PER_EPOCH
 _REPLAY_BUFFER_SIZE: int = _MAX_NUM_STEPS_PER_EPISODE * 64
 _NUM_EVAL_EPISODES: int = 16
 _MAX_NUM_STEPS_PER_EVAL_EPISODE: int = _MAX_NUM_STEPS_PER_EPISODE
+
+_MIN_PLOT_WIDTH: float = 4.0
+_ANIMATION_FILENAME: str = 'single-chaser_single-moving-target_animation.mp4'
+_ANIMATION_FIGSIZE: Tuple[float, float] = (16.0, 16.0)
+_ANIMATION_ARROW_LENGTH: float = 0.5
+_ANIMATION_MS_PER_FRAME: int = 100
 
 
 class SingleChaserSingleMovingTargetScenario(Scenario):
@@ -120,3 +129,13 @@ class SingleChaserSingleMovingTargetScenario(Scenario):
             logs_dir=logs_dir,
         )
         return evaluator
+
+    def create_plotter(self) -> Plotter:
+        plotter = ChaserTargetPlotter(
+            _MIN_PLOT_WIDTH,
+            _ANIMATION_FILENAME,
+            _ANIMATION_FIGSIZE,
+            _ANIMATION_ARROW_LENGTH,
+            _ANIMATION_MS_PER_FRAME,
+        )
+        return plotter
