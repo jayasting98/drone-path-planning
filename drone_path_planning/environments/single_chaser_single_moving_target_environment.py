@@ -79,52 +79,6 @@ class SingleChaserSingleMovingTargetEnvironment(Environment):
         self._target_angular_velocity: tf.Tensor
         self._old_observation: tf.Tensor
 
-    def render(self):
-        direction = find_direction(self._angular_displacement)
-        target_direction = find_direction(self._target_angular_displacement)
-        displacement_arr = self._displacement.numpy()
-        direction_arr = direction.numpy()
-        target_displacement_arr = self._target_displacement.numpy()
-        target_direction_arr = target_direction.numpy()
-        arrow_length = 0.5
-        all_displacement_arr = np.concatenate([displacement_arr, target_displacement_arr])
-        center = np.mean(all_displacement_arr, axis=0)
-        half_width = max(np.amax(np.linalg.norm(all_displacement_arr - center, axis=-1)), WIDTH / 2)
-
-        fig = plt.figure(figsize=(16, 16))
-        ax = fig.add_subplot(projection='3d')
-        ax.set_xlim3d(left=(center[0] - half_width), right=(center[0] + half_width))
-        ax.set_ylim3d(bottom=(center[1] - half_width), top=(center[1] + half_width))
-        ax.set_zlim3d(bottom=(center[2]), top=(center[2] + 2 * half_width))
-
-        self_quiver = ax.quiver(
-            displacement_arr[:, 0],
-            displacement_arr[:, 1],
-            displacement_arr[:, 2],
-            direction_arr[:, 0],
-            direction_arr[:, 1],
-            direction_arr[:, 2],
-            length=arrow_length,
-            normalize=True,
-            colors=[(0.0, 0.0, 1.0, 0.9)],
-        )
-        target_quiver = ax.quiver(
-            target_displacement_arr[:, 0],
-            target_displacement_arr[:, 1],
-            target_displacement_arr[:, 2],
-            target_direction_arr[:, 0],
-            target_direction_arr[:, 1],
-            target_direction_arr[:, 2],
-            length=arrow_length,
-            normalize=True,
-            colors=[(1.0, 0.0, 0.0, 0.9)],
-        )
-
-        fig.canvas.draw()
-        image = PIL.Image.frombytes('RGB', fig.canvas.get_width_height(), fig.canvas.tostring_rgb())
-        plt.close(fig)
-        return image
-
     def generate_state_data_for_plotting(self) -> Dict[str, tf.Tensor]:
         state_data = dict()
         state_data[SELF_DIRECTION] = find_direction(self._angular_displacement)

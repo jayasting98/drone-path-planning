@@ -26,10 +26,6 @@ class Environment:
         self._current_time_step = value
 
     @abc.abstractmethod
-    def render(self):
-        raise NotImplementedError()
-
-    @abc.abstractmethod
     def generate_state_data_for_plotting(self) -> Dict[str, tf.Tensor]:
         raise NotImplementedError()
 
