@@ -63,3 +63,6 @@ class ReplayBuffer:
             'steps': num_steps,
         }
         self._progbar_logger_callback.set_params(progbar_logger_callback_params)
+
+    def __len__(self):
+        return len(self._transitions)
