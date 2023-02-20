@@ -1,3 +1,5 @@
+from typing import Optional
+
 import tensorflow as tf
 
 
@@ -38,3 +40,16 @@ def find_cartesian_square_pairs_with_distinct_elements(cartesian_square_pairs: t
     mask = tf.range(size * size) % (size + 1) != 0
     pairs_with_distinct_elements = tf.boolean_mask(cartesian_square_pairs, mask)
     return pairs_with_distinct_elements
+
+
+def find_relative_quantities(p_quantities: tf.Tensor, q_quantities: Optional[tf.Tensor] = None) -> tf.Tensor:
+    pairs_with_distinct_elements: tf.Tensor
+    if q_quantities is None:
+        cartesian_product = find_cartesian_product(p_quantities, -p_quantities)
+        pairs = find_pairs_from_cartesian_product(cartesian_product)
+        pairs_with_distinct_elements = find_cartesian_square_pairs_with_distinct_elements(pairs)
+    else:
+        cartesian_product = find_cartesian_product(p_quantities, -q_quantities)
+        pairs_with_distinct_elements = find_pairs_from_cartesian_product(cartesian_product)
+    relative_quantities = tf.math.reduce_sum(pairs_with_distinct_elements, axis=1)
+    return relative_quantities
