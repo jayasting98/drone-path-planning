@@ -1,11 +1,11 @@
 import math
 from typing import Dict
 
-import PIL
-import matplotlib.pyplot as plt
-import numpy as np
 import tensorflow as tf
 
+from drone_path_planning.environments.environment import Environment
+from drone_path_planning.environments.time_step import StepType
+from drone_path_planning.environments.time_step import TimeStep
 from drone_path_planning.utilities.constants import ANTI_CLOCKWISE
 from drone_path_planning.utilities.constants import BACKWARD
 from drone_path_planning.utilities.constants import CLOCKWISE
@@ -19,9 +19,6 @@ from drone_path_planning.utilities.constants import TARGET_DIRECTION
 from drone_path_planning.utilities.constants import TARGET_DISPLACEMENT
 from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACMENT
 from drone_path_planning.utilities.constants import TARGET_RELATIVE_VELOCITY
-from drone_path_planning.environments.environment import Environment
-from drone_path_planning.environments.time_step import StepType
-from drone_path_planning.environments.time_step import TimeStep
 from drone_path_planning.utilities.functions import find_direction
 
 
