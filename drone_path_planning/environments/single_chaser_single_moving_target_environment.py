@@ -17,7 +17,7 @@ from drone_path_planning.utilities.constants import SELF_DISPLACEMENT
 from drone_path_planning.utilities.constants import TARGET_ANGULAR_VELOCITY
 from drone_path_planning.utilities.constants import TARGET_DIRECTION
 from drone_path_planning.utilities.constants import TARGET_DISPLACEMENT
-from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACMENT
+from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACEMENT
 from drone_path_planning.utilities.constants import TARGET_RELATIVE_VELOCITY
 from drone_path_planning.utilities.functions import find_direction
 
@@ -156,7 +156,7 @@ class SingleChaserSingleMovingTargetEnvironment(Environment):
             SELF_ANGULAR_VELOCITY: self._angular_velocity,
             TARGET_RELATIVE_VELOCITY: transformed_target_relative_velocity,
             TARGET_ANGULAR_VELOCITY: self._target_angular_velocity,
-            TARGET_RELATIVE_DISPLACMENT: transformed_target_relative_displacement,
+            TARGET_RELATIVE_DISPLACEMENT: transformed_target_relative_displacement,
         }
         return observation
 
@@ -177,9 +177,9 @@ class SingleChaserSingleMovingTargetEnvironment(Environment):
         return reward
 
     def _get_distance_reward(self, observation: tf.Tensor) -> tf.Tensor:
-        old_target_relative_displacement = self._old_observation[TARGET_RELATIVE_DISPLACMENT]
+        old_target_relative_displacement = self._old_observation[TARGET_RELATIVE_DISPLACEMENT]
         old_target_relative_distance = tf.reduce_min(tf.norm(old_target_relative_displacement, axis=-1))
-        target_relative_displacement = observation[TARGET_RELATIVE_DISPLACMENT]
+        target_relative_displacement = observation[TARGET_RELATIVE_DISPLACEMENT]
         target_relative_distance = tf.reduce_min(tf.norm(target_relative_displacement, axis=-1))
         score = old_target_relative_distance - target_relative_distance
         reward = score

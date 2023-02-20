@@ -13,7 +13,7 @@ from drone_path_planning.utilities.constants import TARGET
 from drone_path_planning.utilities.constants import SELF_ANGULAR_VELOCITY
 from drone_path_planning.utilities.constants import SELF_TARGET
 from drone_path_planning.utilities.constants import TARGET_ANGULAR_VELOCITY
-from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACMENT
+from drone_path_planning.utilities.constants import TARGET_RELATIVE_DISPLACEMENT
 from drone_path_planning.utilities.constants import TARGET_RELATIVE_VELOCITY
 from drone_path_planning.utilities.constants import TARGET_SELF
 
@@ -75,7 +75,7 @@ class SingleChaserSingleTargetGraphQNetwork(tf.keras.Model):
     def _build_graph(self, inputs: Dict[str, tf.Tensor]) -> Graph:
         self_node_set: NodeSet = self._build_self_node_set(inputs[SELF_ANGULAR_VELOCITY])
         target_node_set: NodeSet = self._build_target_node_set(inputs[TARGET_RELATIVE_VELOCITY], inputs[TARGET_ANGULAR_VELOCITY])
-        target_relative_displacement = inputs[TARGET_RELATIVE_DISPLACMENT]
+        target_relative_displacement = inputs[TARGET_RELATIVE_DISPLACEMENT]
         num_targets = tf.shape(target_relative_displacement)[0]
         targets = tf.range(num_targets)
         selves = tf.zeros_like(targets)
