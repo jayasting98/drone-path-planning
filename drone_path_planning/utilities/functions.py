@@ -16,20 +16,25 @@ def find_direction(angular_displacement: tf.Tensor) -> tf.Tensor:
 
 
 def find_cartesian_product(p: tf.Tensor, q: tf.Tensor) -> tf.Tensor:
-    multiples = [1 for _ in range(len(tf.shape(p)) + 1)]
-    horizontal_multiples = multiples[:]
-    horizontal_multiples[1] = tf.shape(q)[0]
+    multiples = tf.ones_like(
+        tf.concat([
+            tf.shape(p),
+            tf.constant([0]),
+        ], axis=0),
+    )
+    horizontal_multiples = tf.tensor_scatter_nd_update(multiples, tf.constant([[1]]), tf.shape(q)[0:1])
     horizontally_tiled_p = tf.tile(tf.expand_dims(p, 1), horizontal_multiples)
-    vertical_multiples = multiples[:]
-    vertical_multiples[0] = tf.shape(p)[0]
+    vertical_multiples = tf.tensor_scatter_nd_update(multiples, tf.constant([[0]]), tf.shape(p)[0:1])
     vertically_tiled_q = tf.tile(tf.expand_dims(q, 0), vertical_multiples)
     cartesian_product = tf.stack([horizontally_tiled_p, vertically_tiled_q], axis=2)
     return cartesian_product
 
 
 def find_pairs_from_cartesian_product(cartesian_product: tf.Tensor) -> tf.Tensor:
-    pairs_shape = [-1]
-    pairs_shape.extend(tf.shape(cartesian_product)[2:])
+    pairs_shape = tf.concat([
+        tf.constant([-1]),
+        tf.shape(cartesian_product)[2:],
+    ], axis=0)
     pairs = tf.reshape(cartesian_product, pairs_shape)
     return pairs
 
