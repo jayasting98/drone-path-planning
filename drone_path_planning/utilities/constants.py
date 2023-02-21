@@ -19,7 +19,7 @@ FORWARD: str = 'forward'
 REST: str = 'rest'
 
 
-SELF_DIRECTION: str = 'self_direction'
-SELF_DISPLACEMENT: str = 'self_displacememt'
-TARGET_DIRECTION: str = 'target_direction'
-TARGET_DISPLACEMENT: str = 'target_displacement'
+CHASER_DIRECTIONS: str = 'chaser_directions'
+CHASER_DISPLACEMENTS: str = 'chaser_displacements'
+TARGET_DIRECTIONS: str = 'target_directions'
+TARGET_DISPLACEMENTS: str = 'target_displacements'

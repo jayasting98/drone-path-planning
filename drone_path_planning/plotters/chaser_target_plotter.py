@@ -15,10 +15,10 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 
 from drone_path_planning.plotters.plotter import Plotter
-from drone_path_planning.utilities.constants import SELF_DIRECTION
-from drone_path_planning.utilities.constants import SELF_DISPLACEMENT
-from drone_path_planning.utilities.constants import TARGET_DIRECTION
-from drone_path_planning.utilities.constants import TARGET_DISPLACEMENT
+from drone_path_planning.utilities.constants import CHASER_DIRECTIONS
+from drone_path_planning.utilities.constants import CHASER_DISPLACEMENTS
+from drone_path_planning.utilities.constants import TARGET_DIRECTIONS
+from drone_path_planning.utilities.constants import TARGET_DISPLACEMENTS
 
 
 _TRAJECTORIES: str = 'trajectories'
@@ -57,11 +57,11 @@ class ChaserTargetPlotter(Plotter):
 
     def _process_environment_state(self, environment_state: Dict[str, tf.Tensor]) -> Dict[str, tf.Tensor]:
         processed_environment_state = {**environment_state}
-        self_displacement = environment_state[SELF_DISPLACEMENT]
-        target_displacement = environment_state[TARGET_DISPLACEMENT]
-        all_displacement = tf.concat([self_displacement, target_displacement], axis=0)
-        center = tf.math.reduce_mean(all_displacement, axis=0)
-        maximum_distance_from_center = tf.math.reduce_max(tf.linalg.norm(all_displacement - center, axis=-1))
+        chaser_displacements = environment_state[CHASER_DISPLACEMENTS]
+        target_displacements = environment_state[TARGET_DISPLACEMENTS]
+        all_displacements = tf.concat([chaser_displacements, target_displacements], axis=0)
+        center = tf.math.reduce_mean(all_displacements, axis=0)
+        maximum_distance_from_center = tf.math.reduce_max(tf.linalg.norm(all_displacements - center, axis=-1))
         half_width = tf.math.maximum(maximum_distance_from_center, self._min_width / 2)
         processed_environment_state[_CENTER] = center
         processed_environment_state[_HALF_WIDTH] = half_width
@@ -101,10 +101,10 @@ class ChaserTargetPlotter(Plotter):
             environment_state_index = frame_index - trajectory_length_prefix_sum
             environment_state = environment_states[environment_state_index]
             ax.clear()
-            self_displacement = environment_state[SELF_DISPLACEMENT]
-            self_direction = environment_state[SELF_DIRECTION]
-            target_displacement = environment_state[TARGET_DISPLACEMENT]
-            target_direction = environment_state[TARGET_DIRECTION]
+            chaser_displacements = environment_state[CHASER_DISPLACEMENTS]
+            chaser_directions = environment_state[CHASER_DIRECTIONS]
+            target_displacements = environment_state[TARGET_DISPLACEMENTS]
+            target_directions = environment_state[TARGET_DIRECTIONS]
             center = environment_state[_CENTER]
             half_width = environment_state[_HALF_WIDTH]
             ax.set_xlim3d(left=(center[0] - half_width), right=(center[0] + half_width))
@@ -112,24 +112,24 @@ class ChaserTargetPlotter(Plotter):
             ax.set_zlim3d(bottom=(center[2]), top=(center[2] + 2 * half_width))
             title = _ANIMATION_TITLE_TEMPLATE.format(run=trajectory_index, step=environment_state_index)
             ax.set_title(title)
-            self_quiver = ax.quiver(
-                self_displacement[:, 0],
-                self_displacement[:, 1],
-                self_displacement[:, 2],
-                self_direction[:, 0],
-                self_direction[:, 1],
-                self_direction[:, 2],
+            chaser_quiver = ax.quiver(
+                chaser_displacements[:, 0],
+                chaser_displacements[:, 1],
+                chaser_displacements[:, 2],
+                chaser_directions[:, 0],
+                chaser_directions[:, 1],
+                chaser_directions[:, 2],
                 length=self._animation_arrow_length,
                 normalize=True,
                 colors=[(0.0, 0.0, 1.0, 0.9)],
             )
             target_quiver = ax.quiver(
-                target_displacement[:, 0],
-                target_displacement[:, 1],
-                target_displacement[:, 2],
-                target_direction[:, 0],
-                target_direction[:, 1],
-                target_direction[:, 2],
+                target_displacements[:, 0],
+                target_displacements[:, 1],
+                target_displacements[:, 2],
+                target_directions[:, 0],
+                target_directions[:, 1],
+                target_directions[:, 2],
                 length=self._animation_arrow_length,
                 normalize=True,
                 colors=[(1.0, 0.0, 0.0, 0.9)],
