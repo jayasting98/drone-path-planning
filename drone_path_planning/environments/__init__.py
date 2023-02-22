@@ -1,4 +1,5 @@
 from drone_path_planning.environments.environment import Environment
+from drone_path_planning.environments.multi_agent_environment import MultiAgentEnvironment
 from drone_path_planning.environments.single_chaser_single_moving_target_environment import SingleChaserSingleMovingTargetEnvironment
 from drone_path_planning.environments.time_step import StepType
 from drone_path_planning.environments.time_step import TimeStep
