@@ -304,6 +304,7 @@ class MultipleChasersSingleMovingTargetEnvironment(MultiAgentEnvironment):
         self._target_angular_displacements = updated_quantities[_ANGULAR_DISPLACEMENTS]
         self._target_angular_velocities = updated_quantities[_ANGULAR_VELOCITIES]
 
+    @tf.function
     def _integrate(self, quantities: Dict[str, tf.Tensor]) -> Dict[str, tf.Tensor]:
         non_integrated_quantities = {
             _MASSES,
